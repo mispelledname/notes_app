@@ -1,11 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:notesapp/util/colour.dart';
 import 'package:notesapp/util/constants.dart';
+import 'package:notesapp/widget/small_round_button.dart';
 
-class AddButton extends StatelessWidget {
+class AddButton extends StatefulWidget {
+  @override
+  _AddButtonState createState() => _AddButtonState();
+}
+
+class _AddButtonState extends State<AddButton> with SingleTickerProviderStateMixin{
   
-  AddButton({@required this.onTap}); 
-  final GestureTapCallback onTap; 
+  double mainLeftPosition;
+  double mainTopPosition;
+  double midHorizontal;
+  bool _isButtonDisabled = true;
+  AnimationController _controller;
+  Animation _animation;
+  final Tween<double> turnsTween = Tween<double>(
+    begin: 0,
+    end: Constants.buttonRotationAmount,
+  );
+
+  initState() {
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: Constants.buttonAnimationDuration),
+    );
+    _animation = CurvedAnimation(
+      parent: _controller, 
+      curve: Curves.easeIn, 
+      reverseCurve: Curves.easeOut
+    );
+    super.initState();
+  }
 
   // main add button
   Widget _addOptions() {
@@ -14,67 +41,56 @@ class AddButton extends StatelessWidget {
         color: AppColor.accentColor1,
         child: InkWell(
           splashColor: AppColor.accentColor1.withOpacity(0.1),
-          child: SizedBox(width: 60, height: 60, child: Icon(Icons.add)),
-          onTap: () {},
-        ),
-      ),
-    );
-  }
-
-  // button to add text note
-  Widget _addTextNote() {
-    return ClipOval(
-      child: Material(
-        color: AppColor.accentColor1,
-        child: InkWell(
-          splashColor: Colors.white.withOpacity(0.1),
-          child: SizedBox(width: 60, height: 60, child: Icon(Icons.create)),
-          onTap: () {},
-        ),
-      ),
-    );
-  }
-
-  // button to add recording 
-  Widget _addRecording() {
-    return ClipOval(
-      child: Material(
-        color: AppColor.accentColor1,
-        child: InkWell(
-          splashColor: Colors.white.withOpacity(0.1),
           child: SizedBox(
             width: Constants.roundButtonSize, 
             height: Constants.roundButtonSize, 
-            child: Icon(Icons.mic)
-            ),
-          onTap: () {},
+            child: Icon(Icons.add)
+          ),
+          onTap: () {
+            // animation
+            if (_isButtonDisabled) {
+              _controller.forward();
+            } else {
+              _controller.reverse();
+            }
+            // changes visibility of small buttons on tap 
+            setState(() {
+              _isButtonDisabled = !_isButtonDisabled; 
+            });
+          },
         ),
-      ),
+      )
     );
   }
-
+  
   @override
   Widget build(BuildContext context) {
-    double mainLeftPosition = (MediaQuery.of(context).size.width - Constants.roundButtonSize) * 0.5;
-    
+
+    midHorizontal = MediaQuery.of(context).size.width * 0.5;
+    mainLeftPosition = (MediaQuery.of(context).size.width - Constants.roundButtonSize) * 0.5;
+    mainTopPosition = MediaQuery.of(context).size.height - Constants.roundButtonSize - Constants.buttonOptionVerticalOffset; 
+
     return Stack(children: <Widget>[
-      // main button
-      Positioned(
-        child: _addOptions(),
-        left: mainLeftPosition, 
-        top: MediaQuery.of(context).size.height - Constants.roundButtonSize
-      ),
       // add text
       Positioned(
-        child: _addTextNote(),
-        left: (MediaQuery.of(context).size.width - Constants.roundButtonSize) * 0.5 - Constants.smallButtonOptionHorizontalOffset, 
-        top: MediaQuery.of(context).size.height - Constants.roundButtonSize - Constants.buttonOptionVerticalOffset,
+        child: SmallButton(iconData: Icons.create, onTap: () {}, isButtonDisabled: _isButtonDisabled),
+        left: midHorizontal - Constants.smallButtonOptionHorizontalOffset - Constants.smallRoundButtonSize, 
+        top: mainTopPosition - Constants.smallButtonOptionVerticalOffset,
       ),
       // add recording 
       Positioned(
-        child: _addRecording(),
-        left: (MediaQuery.of(context).size.width - Constants.roundButtonSize) * 0.5 + Constants.smallButtonOptionHorizontalOffset, 
-        top: MediaQuery.of(context).size.height - Constants.roundButtonSize - Constants.buttonOptionVerticalOffset,
+        child: SmallButton(iconData: Icons.mic, onTap: () {}, isButtonDisabled: _isButtonDisabled),
+        left: midHorizontal + Constants.smallButtonOptionHorizontalOffset, 
+        top: mainTopPosition - Constants.smallButtonOptionVerticalOffset,
+      ),
+      // main button
+      Positioned(
+        left: mainLeftPosition, 
+        top: mainTopPosition,
+        child: RotationTransition(
+          turns: turnsTween.animate(_animation),
+          child: _addOptions()
+        ),
       ),
     ],);
   }

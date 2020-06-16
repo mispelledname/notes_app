@@ -47,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-          AddButton(onTap: () {}),
+          AddButton(),
         ]
       ),
     ); 

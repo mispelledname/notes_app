@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:notesapp/widget/notes_display.dart';
 import 'package:notesapp/widget/search_button.dart';
 import 'package:notesapp/widget/add_button.dart';
+import 'package:notesapp/screen/new_recording.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -11,6 +12,38 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
+  bool _addingRecording; 
+  bool _addingText; 
+
+  void initState() {
+    super.initState();
+    _addingRecording = false; 
+    _addingText = false; 
+  }
+
+  // open screen to add recording 
+  void addRecording() {
+    setState(() {
+      _addingRecording = !_addingRecording; 
+    });
+  }
+
+  // open screen to add recording 
+  void addTextNote() {
+    setState(() {
+      _addingText = !_addingText; 
+    });
+  }
+
+  // build new Recording Screen
+  Widget _buildNewRecording() {
+    return new NewRecording(
+      isHidden: !_addingRecording, 
+      addRecordingCallback: addRecording
+    );
+  }
+
+  // build the title and search bar 
   Widget _buildTitle() {
     return Container(
       child: Row(
@@ -47,7 +80,14 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-          AddButton(),
+          // Buttons to add notes/ recordings
+          AddButton(
+            addRecordingCallback: addRecording, 
+            addTextCallback: addTextNote,
+          ),
+          // Add recording
+          _buildNewRecording(),
+          // Add text note 
         ]
       ),
     ); 

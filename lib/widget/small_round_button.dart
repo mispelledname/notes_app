@@ -6,7 +6,7 @@ class SmallButton extends StatefulWidget {
   
   final GestureTapCallback onTap; 
   final IconData iconData; 
-  bool isButtonDisabled;
+  final bool isButtonDisabled;
 
   SmallButton({@required this.iconData, this.onTap, this.isButtonDisabled}); 
   
@@ -15,12 +15,6 @@ class SmallButton extends StatefulWidget {
 }
 
 class _SmallButtonState extends State<SmallButton> {
-
-  @protected
-  void initState() {
-    super.initState();
-    widget.isButtonDisabled = true; 
-  }
 
   @override
   Widget build(BuildContext context) {

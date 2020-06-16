@@ -4,6 +4,12 @@ import 'package:notesapp/util/constants.dart';
 import 'package:notesapp/widget/small_round_button.dart';
 
 class AddButton extends StatefulWidget {
+  
+  final GestureTapCallback addRecordingCallback; 
+  final GestureTapCallback addTextCallback; 
+
+  AddButton({@required this.addRecordingCallback, this.addTextCallback});
+
   @override
   _AddButtonState createState() => _AddButtonState();
 }
@@ -44,7 +50,7 @@ class _AddButtonState extends State<AddButton> with SingleTickerProviderStateMix
           child: SizedBox(
             width: Constants.roundButtonSize, 
             height: Constants.roundButtonSize, 
-            child: Icon(Icons.add)
+            child: Icon(Icons.add, size: Constants.addButtonIconSize),
           ),
           onTap: () {
             // animation
@@ -73,13 +79,13 @@ class _AddButtonState extends State<AddButton> with SingleTickerProviderStateMix
     return Stack(children: <Widget>[
       // add text
       Positioned(
-        child: SmallButton(iconData: Icons.create, onTap: () {}, isButtonDisabled: _isButtonDisabled),
+        child: SmallButton(iconData: Icons.create, onTap: widget.addTextCallback, isButtonDisabled: _isButtonDisabled),
         left: midHorizontal - Constants.smallButtonOptionHorizontalOffset - Constants.smallRoundButtonSize, 
         top: mainTopPosition - Constants.smallButtonOptionVerticalOffset,
       ),
       // add recording 
       Positioned(
-        child: SmallButton(iconData: Icons.mic, onTap: () {}, isButtonDisabled: _isButtonDisabled),
+        child: SmallButton(iconData: Icons.mic, onTap: widget.addRecordingCallback, isButtonDisabled: _isButtonDisabled),
         left: midHorizontal + Constants.smallButtonOptionHorizontalOffset, 
         top: mainTopPosition - Constants.smallButtonOptionVerticalOffset,
       ),

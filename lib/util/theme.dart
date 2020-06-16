@@ -6,11 +6,31 @@ final ThemeData appLightTheme = _buildLightTheme();
 final ThemeData appDarkTheme = _buildDarkTheme();
 
 TextTheme _buildTextTheme() {
-  return ThemeData.dark().textTheme.copyWith(
+  return ThemeData.light().textTheme.copyWith(
     headline1: GoogleFonts.openSans(
       textStyle: TextStyle(
         fontSize: 36,
         fontWeight: FontWeight.bold, 
+      ),
+    ),
+    headline2: GoogleFonts.openSans(
+      textStyle: TextStyle(
+        fontSize: 36,
+        fontWeight: FontWeight.bold, 
+        color: Colors.black,
+      ),
+    ),
+    bodyText1: GoogleFonts.openSans(
+      textStyle: TextStyle(
+        fontSize: 16,
+        color: Colors.black87, 
+      ),
+    ),
+    button: GoogleFonts.openSans(
+      textStyle: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.bold,
+        color: Colors.white, 
       ),
     ),
   ); 

@@ -6,13 +6,18 @@ final ThemeData appLightTheme = _buildLightTheme();
 final ThemeData appDarkTheme = _buildDarkTheme();
 
 TextTheme _buildTextTheme() {
-  return TextTheme(
-    
+  return ThemeData.dark().textTheme.copyWith(
+    headline1: GoogleFonts.openSans(
+      textStyle: TextStyle(
+        fontSize: 36,
+        fontWeight: FontWeight.bold, 
+      ),
+    ),
   ); 
 }
 
 Color primaryColor = Colors.indigo;
-Color primaryColorDark = Colors.indigo[400];
+Color primaryColorDark = AppColor.darkBgColor;
 
 // so that there are no lines above/below expansiontile
 Color dividerColor = Colors.transparent;

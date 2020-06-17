@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:notesapp/util/constants.dart';
 import 'package:notesapp/widget/notes_display.dart';
 import 'package:notesapp/widget/search_button.dart';
 import 'package:notesapp/widget/add_button.dart';
 import 'package:notesapp/screen/new_recording.dart';
+import 'package:notesapp/screen/mask.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -64,6 +66,13 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
+  // build the mask 
+  Widget _buildMask(BuildContext context) {
+    bool _displayMask = this._addingRecording || this._addingText;
+    double opacity = _displayMask? Constants.maskOpacity2 : 0;
+    return Mask(opacity: opacity);
+  }
   
   @override
   Widget build(BuildContext context) {
@@ -80,6 +89,8 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
+          // Mask 
+          _buildMask(context),
           // Buttons to add notes/ recordings
           AddButton(
             addRecordingCallback: addRecording, 

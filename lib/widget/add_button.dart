@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notesapp/screen/mask.dart';
 import 'package:notesapp/util/colour.dart';
 import 'package:notesapp/util/constants.dart';
 import 'package:notesapp/widget/small_round_button.dart';
@@ -34,7 +35,7 @@ class _AddButtonState extends State<AddButton> with SingleTickerProviderStateMix
     );
     _animation = CurvedAnimation(
       parent: _controller, 
-      curve: Curves.easeIn, 
+      curve: Curves.bounceIn, 
       reverseCurve: Curves.easeOut
     );
     super.initState();
@@ -68,6 +69,12 @@ class _AddButtonState extends State<AddButton> with SingleTickerProviderStateMix
       )
     );
   }
+
+  // build a mask if buttons are currently being edited 
+  Widget _buildMask(BuildContext context) {
+    double opacity = _isButtonDisabled? 0 : Constants.maskOpacity1;
+    return Mask(opacity: opacity);
+  }
   
   @override
   Widget build(BuildContext context) {
@@ -77,6 +84,7 @@ class _AddButtonState extends State<AddButton> with SingleTickerProviderStateMix
     mainTopPosition = MediaQuery.of(context).size.height - Constants.roundButtonSize - Constants.buttonOptionVerticalOffset; 
 
     return Stack(children: <Widget>[
+      _buildMask(context), 
       // add text
       Positioned(
         child: SmallButton(iconData: Icons.create, onTap: widget.addTextCallback, isButtonDisabled: _isButtonDisabled),

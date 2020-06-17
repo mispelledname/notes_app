@@ -46,4 +46,8 @@ class Constants {
   static const double noteCardItemSpacing = 15; 
   static const double maxContentLength = 150; 
   static const String seeMoreContentPrompt = "...";
+
+  // masking
+  static const double maskOpacity1 = 0.5;
+  static const double maskOpacity2 = 0.1;
 }

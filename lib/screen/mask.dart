@@ -23,7 +23,6 @@ class Mask extends StatelessWidget {
       );
     }
 
-
     /// Return a sizeless container 
     Widget _hideMask() {
       return Container(); 

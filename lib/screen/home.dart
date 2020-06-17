@@ -90,7 +90,9 @@ class _HomeScreenState extends State<HomeScreen> {
             top: 400,
             child: RaisedButton(
               child: Text("Record"),
-              onPressed: () {},
+              onPressed: () {
+
+              },
             ),
           ),
           // Add recording

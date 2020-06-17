@@ -23,7 +23,7 @@ class _SmallButtonState extends State<SmallButton> {
       child: Opacity(
         opacity: widget.isButtonDisabled ? 0 : 0.9,
         child: Material(
-          color: Colors.white.withOpacity(0.3),
+          color: Colors.white.withOpacity(0.5),
           child: InkWell(
             splashColor: Colors.white.withOpacity(0.3),
             child: SizedBox(

@@ -1,4 +1,9 @@
+/// Note 
+/// 
+/// Model for the Note object in the application. 
+/// 
 class Note {
+  // note title 
   final String title; 
   final String content; 
   // final DateTime dateCreated; 
@@ -9,13 +14,13 @@ class Note {
     // this.dateCreated
   });
 
-  // convert to Note object from Json
+  /// convert from JSON to Note object 
   Note.fromMap(Map snapshot, String id)
       : title = snapshot['title'],
       content = snapshot['content'];
       // dateCreated = DateTime.fromMillisecondsSinceEpoch(snapshot['dateCreated']);
 
-  // convert to Json from Note object
+  /// convert from Note object to JSON
   toJson() {
     return {
       'title' : title,

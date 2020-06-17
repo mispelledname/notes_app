@@ -34,6 +34,7 @@ class Constants {
 
   // audio recording constants
   static const double audioSidePadding = 20; 
+  static const String englishLocale = 'en_US';
 
   // rectangular buttons
   static const double rectangleButtonBorderRadius = 10; 

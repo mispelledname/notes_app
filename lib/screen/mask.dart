@@ -7,10 +7,19 @@ class Mask extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
-      color: Colors.black.withOpacity(opacity),
-    );
+
+    Widget _buildMask() {
+      return Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        color: Colors.black.withOpacity(opacity),
+      );
+    }
+
+    Widget _hideMask() {
+      return Container(); 
+    }
+    
+    return (opacity==0)? _hideMask() : _buildMask();
   }
 }

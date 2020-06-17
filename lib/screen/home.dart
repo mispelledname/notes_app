@@ -96,14 +96,6 @@ class _HomeScreenState extends State<HomeScreen> {
             addRecordingCallback: addRecording, 
             addTextCallback: addTextNote,
           ),
-          Positioned(
-            left: 130,
-            top: 400,
-            child: RaisedButton(
-              child: Text("Record"),
-              onPressed: () {},
-            ),
-          ),
           // Add recording
           _buildNewRecording(),
           // Add text note 

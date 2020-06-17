@@ -62,7 +62,6 @@ class _NotesDisplayState extends State<NotesDisplay> {
                         .toList();
               return Container(
                 height: MediaQuery.of(context).size.height * Constants.notesDisplayContainerHeight,
-                color: AppColor.accentColor1,
                 child: new ListView.builder(
                   padding: EdgeInsets.all(0),
                   shrinkWrap: true,

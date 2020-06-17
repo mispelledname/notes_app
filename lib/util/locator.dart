@@ -5,6 +5,9 @@ import 'package:notesapp/services/format_date_time.dart';
 
 GetIt locator = GetIt.instance;
 
+/// Set up Services Locator
+/// 
+/// Enables widgets to accesss services in the application. 
 void setupLocator() {
   locator.registerLazySingleton(() => FirebaseApi('notes'));
   locator.registerLazySingleton(() => CRUDModel());

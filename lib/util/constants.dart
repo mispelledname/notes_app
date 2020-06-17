@@ -1,3 +1,5 @@
+/// Constants defined for the app
+///
 class Constants {
 
   // notes display

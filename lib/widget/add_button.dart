@@ -79,13 +79,21 @@ class _AddButtonState extends State<AddButton> with SingleTickerProviderStateMix
     return Stack(children: <Widget>[
       // add text
       Positioned(
-        child: SmallButton(iconData: Icons.create, onTap: widget.addTextCallback, isButtonDisabled: _isButtonDisabled),
+        child: SmallButton(iconData: Icons.create, 
+        onTap:(){ // when text button is pressed
+          widget.addTextCallback;
+        } , 
+        isButtonDisabled: _isButtonDisabled),
         left: midHorizontal - Constants.smallButtonOptionHorizontalOffset - Constants.smallRoundButtonSize, 
         top: mainTopPosition - Constants.smallButtonOptionVerticalOffset,
       ),
       // add recording 
       Positioned(
-        child: SmallButton(iconData: Icons.mic, onTap: widget.addRecordingCallback, isButtonDisabled: _isButtonDisabled),
+        child: SmallButton(iconData: Icons.mic,
+        onTap:(){
+          widget.addRecordingCallback;
+        } , 
+        isButtonDisabled: _isButtonDisabled),
         left: midHorizontal + Constants.smallButtonOptionHorizontalOffset, 
         top: mainTopPosition - Constants.smallButtonOptionVerticalOffset,
       ),

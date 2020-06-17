@@ -4,7 +4,6 @@ import 'package:notesapp/services/format_date_time.dart';
 import 'package:notesapp/util/colour.dart';
 import 'package:notesapp/util/constants.dart';
 import 'package:notesapp/util/locator.dart';
-import 'package:provider/provider.dart';
 
 class NoteCard extends StatefulWidget {
   final Note note; 
@@ -26,7 +25,7 @@ class _NoteCardState extends State<NoteCard> {
     String output = "";
     List<String> contentArr = content.split(" ");
 
-    while (currLen < Constants.maxContentLength) {
+    while (i < contentArr.length && currLen < Constants.maxContentLength) {
       output += contentArr[i] + " ";
       currLen += contentArr[i].length + 1; 
       i++; 
@@ -55,14 +54,13 @@ class _NoteCardState extends State<NoteCard> {
   // build date in note card
   Widget _buildDate(BuildContext context) {
     return Align(child: Text(
-      DateTime.now().day.toString()), 
+      _formatDateTime.fullString(DateTime.now())),
       alignment: Alignment.bottomLeft
     ); 
   }
   
   @override
   Widget build(BuildContext context) {
-    print(widget.note.content.length);
     return Container(
       decoration: BoxDecoration(
         color: AppColor.lightBgColor,

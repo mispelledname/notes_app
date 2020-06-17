@@ -36,7 +36,7 @@ class _NotesAppState extends State<NotesApp> {
     speechRec = new SpeechRecognition(); // constructor 
     isReady = false;
     isListening = false;
-
+    // defining in built functions to deal with our local variables
     speechRec.setAvailabilityHandler((bool result) => setState(()=> isReady = result));
     speechRec.setCurrentLocaleHandler((String locale) => setState(() => currentLocale = locale));
     speechRec.setRecognitionStartedHandler( () => setState(()=> isListening = true));
@@ -59,6 +59,7 @@ class _NotesAppState extends State<NotesApp> {
       speechRec
       .stop()
       .then((result) => setState(()=> isListening = result));
+      // ends the recording
     }
   }
   void cancel(){
@@ -66,6 +67,7 @@ class _NotesAppState extends State<NotesApp> {
       speechRec
       .cancel()
       .then((result) => setState(()=> isListening = result));
+      // prematurely cancels the recording
     }
   }
 

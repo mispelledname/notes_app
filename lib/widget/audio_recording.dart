@@ -45,6 +45,7 @@ class _AudioRecordingState extends State<AudioRecording> {
 
   // listen to audio and store text in 'result'
   void record(){
+    print("record debug");
     if (isReady && !isListening){
       speechRec
       .listen(locale: currentLocale)
@@ -96,7 +97,9 @@ class _AudioRecordingState extends State<AudioRecording> {
             RectangleButton(
               buttonColor: AppColor.accentColor1,
               buttonText: Text("Save"),
-              onTap: record
+              onTap: (){
+                record();
+              }
             ),
           ],
         ),

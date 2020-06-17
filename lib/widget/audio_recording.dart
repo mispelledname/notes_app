@@ -54,7 +54,6 @@ class _AudioRecordingState extends State<AudioRecording> {
       .listen(locale: currentLocale)
       .then((result)=> 
       print('_MyAppState.start => result ${result}')); // debug
-      // stores completed transcription in resultText
     }
   }
   

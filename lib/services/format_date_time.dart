@@ -1,10 +1,13 @@
 import 'package:notesapp/util/constants.dart';
 
+/// Service to format the date and time 
+/// 
 class FormatDateTime {
 
   FormatDateTime() {
   }
 
+  /// convert integer months to text
   String toMonth(int month) {
     switch (month) {
       case 1: return "Jan";
@@ -23,7 +26,9 @@ class FormatDateTime {
     }
   }
 
-  // default format type
+  /// default format type
+  /// 
+  /// MMM DD YYYY, HH:MM
   String fullString(DateTime dateTime) {
     int day = dateTime.day;
     int month = dateTime.month; 
@@ -39,7 +44,9 @@ class FormatDateTime {
     );
   }
 
-  // truncated date time
+  /// truncated format type
+  /// 
+  /// MMM DD
   String truncatedString(DateTime dateTime) {
     int day = dateTime.day;
     int month = dateTime.month; 

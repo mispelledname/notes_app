@@ -4,9 +4,16 @@ import 'package:notesapp/util/constants.dart';
 import 'package:notesapp/widget/recorded_text.dart';
 import 'package:notesapp/widget/audio_recording.dart';
 
+/// New Recording widget
+/// 
+/// Widget that displays current audio recording and action buttons 
+/// related to new recordings
+/// 
 class NewRecording extends StatefulWidget {
   
+  // boolean to indicate if this widget is hidden from screen
   final bool isHidden; 
+  // call back function to add a new recording 
   final GestureTapCallback addRecordingCallback; 
 
   NewRecording({@required this.isHidden, this.addRecordingCallback});
@@ -17,6 +24,7 @@ class NewRecording extends StatefulWidget {
 
 class _NewRecordingState extends State<NewRecording> {
   
+  // text currently being recorded 
   String text; 
 
   void initState() {
@@ -26,16 +34,19 @@ class _NewRecordingState extends State<NewRecording> {
     });
   }
 
+  /// update text currently on display 
   void updateText(String newText) {
     setState(() {
       text = newText; 
     });
   }
 
+  /// build the title of the new recording widget 
   Widget _buildRecordingTitle() {
     return Container(
       padding: EdgeInsets.only(bottom: Constants.noteItemSpacing),
       child: Row(children: <Widget>[
+        // back button 
         MaterialButton(
           minWidth: Constants.backButtonMinWidth,
           child: Icon(
@@ -45,16 +56,18 @@ class _NewRecordingState extends State<NewRecording> {
             ),
           onPressed: widget.addRecordingCallback,
         ),
+        // title 
         Text("Record", style: Theme.of(context).textTheme.headline2)
       ],)
     );
   }
 
+  /// NewRecording widget builder 
   Widget _buildNewRecording(BuildContext context) {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
-        // style 
+        // style the widget 
         padding: EdgeInsets.only(top: Constants.noteTopPadding),
         width: MediaQuery.of(context).size.width, 
         height: MediaQuery.of(context).size.height * 0.7, 
@@ -68,6 +81,7 @@ class _NewRecordingState extends State<NewRecording> {
         // children
         child: Column(children: <Widget>[
           _buildRecordingTitle(),
+          // display recorded text
           RecordedText(text: this.text),
           AudioRecording(updateText: updateText), 
         ],)
@@ -75,6 +89,7 @@ class _NewRecordingState extends State<NewRecording> {
     ); 
   }
   
+  /// Builder for NewRecording widget 
   @override
   Widget build(BuildContext context) {
     return Container(

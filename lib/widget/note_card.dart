@@ -5,6 +5,11 @@ import 'package:notesapp/util/colour.dart';
 import 'package:notesapp/util/constants.dart';
 import 'package:notesapp/util/locator.dart';
 
+/// Note Card
+/// 
+/// Displays the title, content and date created of a Note in the 
+/// main section of the home screen. 
+/// 
 class NoteCard extends StatefulWidget {
   final Note note; 
 
@@ -18,7 +23,10 @@ class _NoteCardState extends State<NoteCard> {
 
   FormatDateTime _formatDateTime = locator<FormatDateTime>();
   
-  // create text preview
+  /// Create Content Preview
+  /// 
+  /// Truncates the content at an appropriate place, if it exceeds the 
+  /// maximum number of characters in the preview display. 
   String _createContentPreview(String content) {
     int i = 0; 
     int currLen = 0; 
@@ -33,7 +41,7 @@ class _NoteCardState extends State<NoteCard> {
     return output + Constants.seeMoreContentPrompt; 
   }
 
-  // build title in note crd
+  /// build title in Note Card 
   Widget _buildTitle(BuildContext context) {
     return Align(child: Text(
       '${widget.note.title}', 
@@ -42,7 +50,7 @@ class _NoteCardState extends State<NoteCard> {
     );
   }
 
-  // build main content in note card
+  /// build main content in note card
   Widget _buildContent(BuildContext context) {
     return Align(child: Text(
       '${_createContentPreview(widget.note.content)}',
@@ -51,7 +59,7 @@ class _NoteCardState extends State<NoteCard> {
     );
   }
 
-  // build date in note card
+  /// build date in note card
   Widget _buildDate(BuildContext context) {
     return Align(child: Text(
       _formatDateTime.fullString(DateTime.now())),
@@ -59,9 +67,12 @@ class _NoteCardState extends State<NoteCard> {
     ); 
   }
   
+  /// build Note Card 
   @override
   Widget build(BuildContext context) {
     return Container(
+      
+      // Aesthetics 
       decoration: BoxDecoration(
         color: AppColor.lightBgColor,
         borderRadius: BorderRadius.circular(20),
@@ -72,11 +83,15 @@ class _NoteCardState extends State<NoteCard> {
         right: Constants.noteCardSidePadding,
         bottom: Constants.noteCardTopPadding
       ),
+
+      // Content Display 
       child: Column(children: <Widget>[
+        // title 
         _buildTitle(context),
+        // content
         _buildContent(context),
+        // date 
         _buildDate(context), 
-        // Text('${note.dateCreated.toIso8601String()}', style: Theme.of(context).textTheme.bodyText2),
       ],)
     );
   }

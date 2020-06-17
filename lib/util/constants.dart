@@ -1,5 +1,8 @@
 class Constants {
 
+  // notes display
+  static const double notesDisplayContainerHeight = 0.83;
+
   // add button constants 
   static const double roundButtonSize = 70;
   static const double addButtonIconSize = 35; 
@@ -23,8 +26,13 @@ class Constants {
   static const double recordedTextPadding = 15;
   static const double recordedTextBorderRadius = 20;
 
-  // audio recording constants
+  // strings
   static const String emptyString = "";
+  static const String space = " ";
+  static const String comma = ",";
+  static const String colon = ":";
+
+  // audio recording constants
   static const double audioSidePadding = 20; 
 
   // rectangular buttons
@@ -35,7 +43,7 @@ class Constants {
   // note card
   static const double noteCardTopPadding = 8; 
   static const double noteCardSidePadding = 10;
-  static const double noteCardItemSpacing = 10; 
+  static const double noteCardItemSpacing = 15; 
   static const double maxContentLength = 150; 
   static const String seeMoreContentPrompt = "...";
 }

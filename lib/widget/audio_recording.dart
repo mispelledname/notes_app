@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:notesapp/util/colour.dart';
 import 'package:notesapp/util/constants.dart';
 import 'package:notesapp/widget/rectangle_buttons.dart';
-import 'package:speech_recognition/speech_recognition.dart';
 
 /// Audio Recording 
 /// 
@@ -18,62 +17,6 @@ class AudioRecording extends StatefulWidget {
 }
 
 class _AudioRecordingState extends State<AudioRecording> {
-
-  // speech recognition
-  SpeechRecognition speechRec;
-  bool isReady;
-  bool isListening;
-  String resultText = Constants.emptyString;
-  String currentLocale = Constants.englishLocale;
-
-  // initiate speech recognition 
-  void initSpeechRecognition(){
-    speechRec = new SpeechRecognition(); // constructor 
-    isReady = false;
-    isListening = false;
-    // defining in built functions to deal with our local variables
-    speechRec.setAvailabilityHandler((bool result) => setState(()=> isReady = result));
-    speechRec.setCurrentLocaleHandler((String locale) => setState(() => currentLocale = locale));
-    speechRec.setRecognitionStartedHandler( () => setState(()=> isListening = true));
-    speechRec.setRecognitionResultHandler((String text) => setState(() => resultText = text));
-    speechRec.setRecognitionCompleteHandler(() => setState(()=> isListening = false));
-    speechRec.activate().then((res) => setState(()=> isReady = res));
-  }
-
-  @override
-  void initState(){ // constructor
-    super.initState();
-    initSpeechRecognition();
-  }
-
-  // listen to audio and store text in 'result'
-  void record(){
-    if (isReady && !isListening){
-      speechRec
-      .listen(locale: currentLocale)
-      .then((result)=> 
-      print('_MyAppState.start => result ${result}')); // debug
-    }
-  }
-
-  // stops listening 
-  void stop(){
-    if (isListening){
-      speechRec
-      .stop()
-      .then((result) => setState(()=> isListening = result));
-    }
-  }
-
-  // prematurely cancels the recording 
-  void cancel(){
-    if (isListening){
-      speechRec
-      .cancel()
-      .then((result) => setState(()=> isListening = result));
-    }
-  }
-
 
   /// Build Split Button
   /// 
@@ -96,7 +39,7 @@ class _AudioRecordingState extends State<AudioRecording> {
     return RectangleButton(
       buttonColor: AppColor.accentColor1,
       buttonText: Text("Save"),
-      onTap: record
+      onTap: () {}
     );
   }
 

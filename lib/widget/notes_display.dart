@@ -48,7 +48,7 @@ class _NotesDisplayState extends State<NotesDisplay> {
     return Container(
       // Making a StreamBuilder to listen to changes in real time
       child: StreamBuilder<QuerySnapshot>(
-        stream: productProvider.fetchProductsAsStream(),
+        stream: productProvider.fetchNotesAsStream(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           // Handling errors from firebase
           if (snapshot.hasError)

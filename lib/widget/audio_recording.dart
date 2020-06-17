@@ -57,7 +57,7 @@ class _AudioRecordingState extends State<AudioRecording> {
       // stores completed transcription in resultText
     }
   }
-
+  
   // stops listening 
   void stop(){
     if (isListening){

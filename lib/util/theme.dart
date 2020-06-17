@@ -20,10 +20,23 @@ TextTheme _buildTextTheme() {
         color: Colors.black,
       ),
     ),
+    headline3: GoogleFonts.openSans(
+      textStyle: TextStyle(
+        fontSize: 24,
+        fontWeight: FontWeight.bold, 
+        color: Colors.black87,
+      ),
+    ),
     bodyText1: GoogleFonts.openSans(
       textStyle: TextStyle(
         fontSize: 16,
         color: Colors.black87, 
+      ),
+    ),
+    bodyText2: GoogleFonts.openSans(
+      textStyle: TextStyle(
+        fontSize: 16,
+        color: Colors.black45, 
       ),
     ),
     button: GoogleFonts.openSans(

@@ -31,4 +31,11 @@ class Constants {
   static const double rectangleButtonBorderRadius = 10; 
   static const double rectangleButtonHeight = 45;
   static const double rectangleButtonWidth = 0.33; 
+
+  // note card
+  static const double noteCardTopPadding = 8; 
+  static const double noteCardSidePadding = 10;
+  static const double noteCardItemSpacing = 10; 
+  static const double maxContentLength = 150; 
+  static const String seeMoreContentPrompt = "...";
 }

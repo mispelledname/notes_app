@@ -7,6 +7,10 @@ import 'package:provider/provider.dart';
 import 'package:notesapp/model/CRUDModel.dart';
 import 'package:notesapp/widget/note_card.dart';
 
+/// Notes Display
+/// 
+/// Displays the notes stored in Firebase on the Home Screen as a List.
+/// 
 class NotesDisplay extends StatefulWidget {
   @override
   _NotesDisplayState createState() => _NotesDisplayState();
@@ -16,46 +20,50 @@ class _NotesDisplayState extends State<NotesDisplay> {
   
   List<Note> notes; 
   ScrollController _controller;
+
+  /// Scroll Listener for scrolling
+  _scrollListener() {
+    // scroller reached the bottom 
+    if (_controller.offset >= _controller.position.maxScrollExtent &&
+      !_controller.position.outOfRange) {}
+
+    // scroller reached the top 
+    if (_controller.offset <= _controller.position.minScrollExtent &&
+        !_controller.position.outOfRange) {}
+  }
+
+  /// Initialize widget and scroller 
+  @override
+  void initState() {
+    _controller = ScrollController();
+    _controller.addListener(_scrollListener);
+    super.initState();
+  }
   
+  /// Build Notes Display 
+  /// 
+  /// Making a StreamBuilder to listen to changes in firebase in real time.
   @override
   Widget build(BuildContext context) {
-    final productProvider = Provider.of<CRUDModel>(context);
-    String message;
 
-    // scroll listener for scrolling
-    _scrollListener() {
-      if (_controller.offset >= _controller.position.maxScrollExtent &&
-        !_controller.position.outOfRange) {
-        setState(() {
-          message = "reach the bottom";
-        });
-      }
-      if (_controller.offset <= _controller.position.minScrollExtent &&
-          !_controller.position.outOfRange) {
-        setState(() {
-          message = "reach the top";
-        });
-      }
-    }
-
-    @override
-    void initState() {
-      _controller = ScrollController();
-      _controller.addListener(_scrollListener);
-      super.initState();
-    }
+    // service provider to fetch stream of notes 
+    final streamProvider = Provider.of<CRUDModel>(context);
 
     return Container(
-      // Making a StreamBuilder to listen to changes in real time
       child: StreamBuilder<QuerySnapshot>(
-        stream: productProvider.fetchNotesAsStream(),
+        stream: streamProvider.fetchNotesAsStream(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          
           // Handling errors from firebase
           if (snapshot.hasError)
             return Text('Error: ${snapshot.error}');
+          
           switch (snapshot.connectionState) {
-            // Display if still loading data
+            
+            // Data is still loading 
             case ConnectionState.waiting: return Text('Loading...');
+
+            // Display data using List Builder 
             default:
               notes = snapshot.data.documents
                         .map((doc) => Note.fromMap(doc.data, doc.documentID))
@@ -68,7 +76,6 @@ class _NotesDisplayState extends State<NotesDisplay> {
                   controller: _controller,
                   itemCount: notes.length,
                   itemBuilder: (buildContext, index) =>
-                    // ListTile(title: Text('test', style: TextStyle(color: Colors.white)))
                     Container(
                       margin: EdgeInsets.only(bottom: Constants.noteCardItemSpacing),
                       child: NoteCard(note: notes[index])

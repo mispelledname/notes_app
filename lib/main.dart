@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'util/router.dart';
 import 'util/theme.dart';
+import 'package:notesapp/util/locator.dart';
+import 'package:provider/provider.dart';
+import 'package:notesapp/model/CRUDModel.dart';
 
 void main() {
+  setupLocator();
   runApp(NotesApp());
 }
 
@@ -16,12 +20,17 @@ class _NotesAppState extends State<NotesApp> {
   
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: 'NotesApp',
-      theme: appDarkTheme,
-      initialRoute: Router.homeRoute,
-      navigatorObservers: <NavigatorObserver>[observer],
-      onGenerateRoute: Router.generateRoute,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => locator<CRUDModel>()),
+      ],
+      child: new MaterialApp(
+        title: 'NotesApp',
+        theme: appDarkTheme,
+        initialRoute: Router.homeRoute,
+        navigatorObservers: <NavigatorObserver>[observer],
+        onGenerateRoute: Router.generateRoute,
+      )
     );
   }
 }

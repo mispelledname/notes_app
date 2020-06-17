@@ -10,8 +10,8 @@ class SearchButton extends StatelessWidget {
     return Opacity(
       opacity: 0.5,
       child: MaterialButton(
-        color: AppColor.lightBgColor.withOpacity(0.6),
-        splashColor: AppColor.lightBgColor.withOpacity(0.5),
+        color: Colors.white.withOpacity(0.3),
+        splashColor: Colors.white.withOpacity(0.1),
         minWidth: 25,
         child: Padding(
           padding: EdgeInsets.all(0.0),

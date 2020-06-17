@@ -4,6 +4,9 @@ import 'package:notesapp/util/constants.dart';
 import 'package:notesapp/widget/rectangle_buttons.dart';
 import 'package:speech_recognition/speech_recognition.dart';
 
+/// Audio Recording 
+/// 
+/// Widget contains 
 class AudioRecording extends StatefulWidget {
   
   final Function updateText;
@@ -54,7 +57,6 @@ class _AudioRecordingState extends State<AudioRecording> {
     }
   }
 
-
   // stops listening 
   void stop(){
     if (isListening){
@@ -73,6 +75,33 @@ class _AudioRecordingState extends State<AudioRecording> {
     }
   }
 
+
+  /// Build Split Button
+  /// 
+  /// When tapped, splits the recording into sections.
+  /// Each section is comprised of a time stamp for when the section of the 
+  /// recording began, and the text content in that section.
+  /// (For later implementation stages).
+  Widget _buildSplitButton() {
+    return RectangleButton(
+      buttonColor: AppColor.accentColor2,
+      buttonText: Text("Split"),
+      onTap: () {}
+    );
+  }
+
+  /// Build Save Button
+  /// 
+  /// When tapped, saves the current audio and closes the recording widget.
+  Widget _buildSaveButton() {
+    return RectangleButton(
+      buttonColor: AppColor.accentColor1,
+      buttonText: Text("Save"),
+      onTap: record
+    );
+  }
+
+  /// build Audio Recording widget
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -81,23 +110,21 @@ class _AudioRecordingState extends State<AudioRecording> {
         right: Constants.audioSidePadding
       ),
       child: Column(children: <Widget>[
+
+        // empty space to substitute audio wave form 
         // AudioWaveForm(),
         Container(
           height: 150, 
         ),
+
+        // row of buttons 
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            RectangleButton(
-              buttonColor: AppColor.accentColor2,
-              buttonText: Text("Split"),
-              onTap: () {}
-            ),
-            RectangleButton(
-              buttonColor: AppColor.accentColor1,
-              buttonText: Text("Save"),
-              onTap: record
-            ),
+            // left split button 
+            _buildSplitButton(),
+            // right save button  
+            _buildSaveButton(),
           ],
         ),
       ],)

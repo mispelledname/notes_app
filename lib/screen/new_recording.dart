@@ -41,21 +41,26 @@ class _NewRecordingState extends State<NewRecording> {
     });
   }
 
+  /// build back button
+  Widget _buildBackButton() {
+    return MaterialButton(
+      minWidth: Constants.backButtonMinWidth,
+      child: Icon(
+        Icons.arrow_back, 
+        color: Colors.black, size: 
+        Constants.backButtonIconSize
+        ),
+      onPressed: widget.addRecordingCallback,
+    );
+  }
+
   /// build the title of the new recording widget 
   Widget _buildRecordingTitle() {
     return Container(
       padding: EdgeInsets.only(bottom: Constants.noteItemSpacing),
       child: Row(children: <Widget>[
         // back button 
-        MaterialButton(
-          minWidth: Constants.backButtonMinWidth,
-          child: Icon(
-            Icons.arrow_back, 
-            color: Colors.black, size: 
-            Constants.backButtonIconSize
-            ),
-          onPressed: widget.addRecordingCallback,
-        ),
+        _buildBackButton(), 
         // title 
         Text("Record", style: Theme.of(context).textTheme.headline2)
       ],)

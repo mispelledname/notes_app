@@ -98,20 +98,24 @@ class _AddButtonState extends State<AddButton> with SingleTickerProviderStateMix
     mainTopPosition = MediaQuery.of(context).size.height - Constants.roundButtonSize - Constants.buttonOptionVerticalOffset; 
 
     return Stack(children: <Widget>[
+
       // Mask layer 
       _buildMask(context), 
+
       // Add text note button 
       Positioned(
         child: SmallButton(iconData: Icons.create, onTap: widget.addTextCallback, isButtonDisabled: _isButtonDisabled),
         left: midHorizontal - Constants.smallButtonOptionHorizontalOffset - Constants.smallRoundButtonSize, 
         top: mainTopPosition - Constants.smallButtonOptionVerticalOffset,
       ),
+
       // Add Recording button 
       Positioned(
         child: SmallButton(iconData: Icons.mic, onTap: widget.addRecordingCallback, isButtonDisabled: _isButtonDisabled),
         left: midHorizontal + Constants.smallButtonOptionHorizontalOffset, 
         top: mainTopPosition - Constants.smallButtonOptionVerticalOffset,
       ),
+      
       // Main Add button with animation 
       Positioned(
         left: mainLeftPosition, 

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:notesapp/util/colour.dart';
 import 'package:notesapp/util/constants.dart';
 
+/// Small Round Button
+/// 
+/// Can customize button icon and callback funtion.
+/// Can be disabled (disappears completely).
+/// 
 class SmallButton extends StatefulWidget {
   
   final GestureTapCallback onTap; 
@@ -16,9 +20,13 @@ class SmallButton extends StatefulWidget {
 
 class _SmallButtonState extends State<SmallButton> {
 
+  /// build Small Round button 
+  /// 
+  /// If button is disabled, its opacity is zero, and its gestures
+  /// are ignored. 
   @override
   Widget build(BuildContext context) {
-
+    
     return ClipOval(
       child: Opacity(
         opacity: widget.isButtonDisabled ? 0 : 0.9,

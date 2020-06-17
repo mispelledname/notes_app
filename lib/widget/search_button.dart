@@ -1,18 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:notesapp/util/colour.dart';
 
+/// Search Button
+/// 
+/// When tapped, takes the user into the search screen
+/// to search through their notes.
+/// 
 class SearchButton extends StatelessWidget {
-  SearchButton({@required this.onPressed});
   final GestureTapCallback onPressed; 
-  
+
+  SearchButton({@required this.onPressed});
+
+  /// build Search Button 
   @override
   Widget build(BuildContext context) {
+
     return Opacity(
       opacity: 0.5,
       child: MaterialButton(
+
+        // button aesthetics 
         color: Colors.white.withOpacity(0.3),
         splashColor: Colors.white.withOpacity(0.1),
         minWidth: 25,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+
+        // button content (search icon)
         child: Padding(
           padding: EdgeInsets.all(0.0),
           child: Row(
@@ -25,10 +40,9 @@ class SearchButton extends StatelessWidget {
             ],
           ),
         ),
-        onPressed: onPressed,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
+
+        // button callback 
+        onPressed: onPressed,   
       ),
     );
   }

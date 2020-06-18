@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:notesapp/model/note.dart';
 import 'package:notesapp/util/colour.dart';
 import 'package:notesapp/util/constants.dart';
+import 'package:notesapp/util/router.dart';
 import 'package:notesapp/widget/rectangle_buttons.dart';
+import 'package:provider/provider.dart';
+import 'package:notesapp/model/CRUDModel.dart';
 
 /// Audio Recording 
 /// 
-/// Widget contains 
+/// Widget contains two buttons 
 class AudioRecording extends StatefulWidget {
   
-  final Function updateText;
+  final String recordedText; 
 
-  AudioRecording({@required this.updateText});
+  AudioRecording({@required this.recordedText});
   
   @override
   _AudioRecordingState createState() => _AudioRecordingState();
@@ -36,10 +40,16 @@ class _AudioRecordingState extends State<AudioRecording> {
   /// 
   /// When tapped, saves the current audio and closes the recording widget.
   Widget _buildSaveButton() {
+    
     return RectangleButton(
       buttonColor: AppColor.accentColor1,
       buttonText: Text("Save"),
-      onTap: () {}
+      onTap: () async {
+        final _firebaseApi = Provider.of<CRUDModel>(context);
+        Note note = Note(title: "Recording", content: widget.recordedText);
+        await _firebaseApi.addNote(note);
+        Navigator.pushNamed(context, Router.homeRoute);
+      }
     );
   }
 
@@ -52,13 +62,6 @@ class _AudioRecordingState extends State<AudioRecording> {
         right: Constants.audioSidePadding
       ),
       child: Column(children: <Widget>[
-
-        // empty space to substitute audio wave form 
-        // AudioWaveForm(),
-        Container(
-          height: 150, 
-        ),
-
         // row of buttons 
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

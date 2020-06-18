@@ -1,4 +1,6 @@
+import 'package:google_fonts/google_fonts.dart';
 import 'package:notesapp/util/constants.dart';
+import 'package:flutter/material.dart';
 
 /// Service to format the date and time 
 /// 
@@ -26,6 +28,12 @@ class FormatDateTime {
     }
   }
 
+  /// display integers with two digits 
+  String toDoubleDigits(int n) {
+    String num = n.toString();
+    return (num.length < 2)? "0"+num : num; 
+  }
+
   /// default format type
   /// 
   /// MMM DD YYYY, HH:MM
@@ -36,11 +44,11 @@ class FormatDateTime {
     int hour = dateTime.hour;
     int minute = dateTime.minute;
     return (
-      this.toMonth(month) + Constants.space + 
+      this.toMonth(month).toUpperCase() + Constants.space + 
       '${day.toString()}' + Constants.space + 
       '${year.toString()}' + Constants.comma + Constants.space + 
-      '${hour.toString()}' + Constants.colon + 
-      '${minute.toString()}'
+      this.toDoubleDigits(hour) + Constants.colon + 
+      this.toDoubleDigits(minute)
     );
   }
 
@@ -53,6 +61,22 @@ class FormatDateTime {
     return (
       this.toMonth(month) + Constants.space + 
       '${day.toString()}'
+    );
+  }
+
+  /// default format type widget
+  /// 
+  /// MMM DD YYYY, HH:MM
+  Widget fullStringWidget(DateTime dateTime) {
+    return Text(
+      this.fullString(dateTime), 
+      style: GoogleFonts.openSans(
+        textStyle: TextStyle(
+          color: Colors.black54,
+          fontSize: 12, 
+          fontWeight: FontWeight.w700,
+        )
+      )
     );
   }
 }

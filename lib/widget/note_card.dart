@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:notesapp/model/note.dart';
-import 'package:notesapp/services/format_date_time.dart';
+import 'package:notesapp/model/format_date_time.dart';
 import 'package:notesapp/util/colour.dart';
 import 'package:notesapp/util/constants.dart';
 import 'package:notesapp/util/locator.dart';
@@ -38,7 +38,11 @@ class _NoteCardState extends State<NoteCard> {
       currLen += contentArr[i].length + 1; 
       i++; 
     }
-    return output + Constants.seeMoreContentPrompt; 
+    return output + 
+      ((i < contentArr.length)
+        ? Constants.seeMoreContentPrompt 
+        : Constants.emptyString
+    ); 
   }
 
   /// build title in Note Card 
@@ -61,10 +65,15 @@ class _NoteCardState extends State<NoteCard> {
 
   /// build date in note card
   Widget _buildDate(BuildContext context) {
-    return Align(child: Text(
-      _formatDateTime.fullString(DateTime.now())),
+    return Align(
+      child: _formatDateTime.fullStringWidget(DateTime.now()),
       alignment: Alignment.bottomLeft
     ); 
+  }
+
+  /// build a space 
+  Widget _buildSpace() {
+    return SizedBox(height: 10, width: 10);
   }
   
   /// build Note Card 
@@ -88,10 +97,16 @@ class _NoteCardState extends State<NoteCard> {
       child: Column(children: <Widget>[
         // title 
         _buildTitle(context),
+        _buildSpace(),
+
         // content
         _buildContent(context),
+        _buildSpace(),
+        _buildSpace(),
+
         // date 
         _buildDate(context), 
+        _buildSpace(),
       ],)
     );
   }

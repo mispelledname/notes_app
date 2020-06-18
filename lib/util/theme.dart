@@ -70,12 +70,12 @@ Color dividerColor = Colors.transparent;
 Color errorColor = Colors.red;
 
 /// for better back transition
-PageTransitionsTheme _pageTransitionsTheme = PageTransitionsTheme(
-  builders: <TargetPlatform, PageTransitionsBuilder>{
-    TargetPlatform.android: CupertinoPageTransitionsBuilder(),
-    TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-  },
-);
+// PageTransitionsTheme _pageTransitionsTheme = PageTransitionsTheme(
+//   builders: <TargetPlatform, PageTransitionsBuilder>{
+//     TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+//     TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+//   },
+// );
 
 ThemeData _buildLightTheme() {
   final ThemeData base = ThemeData(
@@ -91,7 +91,7 @@ ThemeData _buildLightTheme() {
 
   return base.copyWith(
     textTheme: _buildTextTheme(),
-    pageTransitionsTheme: _pageTransitionsTheme,
+    // pageTransitionsTheme: _pageTransitionsTheme,
   );
 }
 
@@ -109,6 +109,6 @@ ThemeData _buildDarkTheme() {
 
   return base.copyWith(
     textTheme: _buildTextTheme(),
-    pageTransitionsTheme: _pageTransitionsTheme,
+    // pageTransitionsTheme: _pageTransitionsTheme,
   );
 }

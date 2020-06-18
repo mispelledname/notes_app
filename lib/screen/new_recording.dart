@@ -3,7 +3,6 @@ import 'package:notesapp/util/colour.dart';
 import 'package:notesapp/util/constants.dart';
 import 'package:notesapp/widget/recorded_text.dart';
 import 'package:notesapp/widget/audio_recording.dart';
-import 'package:speech_recognition/speech_recognition.dart';
 
 /// New Recording widget
 /// 
@@ -11,97 +10,35 @@ import 'package:speech_recognition/speech_recognition.dart';
 /// related to new recordings
 /// 
 class NewRecording extends StatefulWidget {
-  
-  // boolean to indicate if this widget is hidden from screen
-  final bool isHidden; 
-  // call back function to add a new recording 
-  final GestureTapCallback addRecordingCallback; 
 
-  NewRecording({@required this.isHidden, this.addRecordingCallback});
+  // callback function to add a new recording 
+  final GestureTapCallback addRecordingCallback; 
+  // callback function to return to homescreen 
+  final GestureTapCallback goBack; 
+  // text currently being recorded 
+  final String text; 
+
+  NewRecording({this.addRecordingCallback, this.goBack, this.text});
   
   @override
   _NewRecordingState createState() => _NewRecordingState();
 }
 
 class _NewRecordingState extends State<NewRecording> {
-  
-  // text currently being recorded 
-  String text; 
-  // speech recognition
-  SpeechRecognition speechRec;
-  bool isReady;
-  bool isListening;
-  String resultText = Constants.emptyString;
-  String currentLocale = Constants.englishLocale;
-
-  /// initiate speech recognition 
-  void initSpeechRecognition(){
-    speechRec = new SpeechRecognition(); // constructor 
-    isReady = false;
-    isListening = false;
-    // defining in built functions to deal with our local variables
-    speechRec.setAvailabilityHandler((bool result) => setState(()=> isReady = result));
-    speechRec.setCurrentLocaleHandler((String locale) => setState(() => currentLocale = locale));
-    speechRec.setRecognitionStartedHandler( () => setState(()=> isListening = true));
-    speechRec.setRecognitionResultHandler((String text) => setState(() => resultText = text));
-    speechRec.setRecognitionCompleteHandler(() => setState(()=> isListening = false));
-    speechRec.activate().then((res) => setState(()=> isReady = res));
-  }
-
-  @override
-  void initState(){ 
-    super.initState();
-    setState(() {
-      text = "";
-    });
-    initSpeechRecognition();
-  }
-
-  /// listen to audio and store text in 'result'
-  void record(){
-    if (isReady && !isListening){
-      speechRec
-      .listen(locale: currentLocale)
-      .then((result)=> 
-      print('_MyAppState.start => result ${result}')); // debug
-    }
-  }
-
-  /// stops listening 
-  void stop(){
-    if (isListening){
-      speechRec
-      .stop()
-      .then((result) => setState(()=> isListening = result));
-    }
-  }
-
-  /// prematurely cancels the recording 
-  void cancel(){
-    if (isListening){
-      speechRec
-      .cancel()
-      .then((result) => setState(()=> isListening = result));
-    }
-  }
-
-  /// update text currently on display 
-  void updateText(String newText) {
-    setState(() {
-      text = newText; 
-    });
-  }
 
   /// build back button
   Widget _buildBackButton() {
     return MaterialButton(
+      // aesthetics 
       minWidth: Constants.backButtonMinWidth,
+      // content
       child: Icon(
         Icons.arrow_back, 
         color: Colors.black, size: 
         Constants.backButtonIconSize
         ),
-      onPressed: widget.addRecordingCallback,
+      // callback 
+      onPressed: widget.goBack
     );
   }
 
@@ -123,7 +60,8 @@ class _NewRecordingState extends State<NewRecording> {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
-        // style the widget 
+
+        // widget aesthetics 
         padding: EdgeInsets.only(top: Constants.noteTopPadding),
         width: MediaQuery.of(context).size.width, 
         height: MediaQuery.of(context).size.height * 0.7, 
@@ -134,12 +72,22 @@ class _NewRecordingState extends State<NewRecording> {
             topRight: const Radius.circular(Constants.noteBorderRadius)
           ),
         ),
-        // children
+
+        // widget contents 
         child: Column(children: <Widget>[
+          // title 
           _buildRecordingTitle(),
+
           // display recorded text
-          RecordedText(text: this.text),
-          AudioRecording(updateText: updateText), 
+          RecordedText(text: widget.text),
+
+          // display audio recording wave form
+          Container(height: 150),
+
+          // audio recording buttons 
+          AudioRecording(
+            recordedText: widget.text,
+          ), 
         ],)
       ),
     ); 
@@ -149,7 +97,7 @@ class _NewRecordingState extends State<NewRecording> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: widget.isHidden? null : _buildNewRecording(context),
+      child: _buildNewRecording(context),
     );
   }
 }

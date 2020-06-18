@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:notesapp/model/speech_recognition.dart';
 import 'package:notesapp/util/constants.dart';
+import 'package:notesapp/util/router.dart';
 import 'package:notesapp/widget/notes_display.dart';
 import 'package:notesapp/widget/search_button.dart';
 import 'package:notesapp/widget/add_button.dart';
 import 'package:notesapp/screen/new_recording.dart';
 import 'package:notesapp/screen/mask.dart';
+import 'package:notesapp/util/locator.dart';
 
 /// Home Screen
 /// 
@@ -17,19 +19,30 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // displays new recording screen if true
-  bool _addingRecording; 
-  // displays new text note screen if true 
-  bool _addingText; 
+  
+  bool _addingRecording;            // displays new recording screen if true
+  bool _addingText;                 // displays new text note screen if true 
+  SpeechRecognitionApi _speechRec = locator<SpeechRecognitionApi>();
+  String result; 
 
+  /// listens for changes in speech recognition 
+  void _listener() {
+    setState(() {
+      result = _speechRec.resultText;
+    });
+  }
+
+  /// initialize Widget with speech recognition 
   void initState() {
     super.initState();
     _addingRecording = false; 
     _addingText = false; 
+    _speechRec.addListener(_listener); 
   }
 
   /// open screen to add recording 
   void addRecording() {
+    _speechRec.record(); 
     setState(() {
       _addingRecording = !_addingRecording; 
     });
@@ -42,11 +55,19 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  /// back button to return to home screen
+  void backToHome() {
+    Navigator.pushNamed(context, Router.homeRoute);
+    _speechRec.cancel(); 
+  }
+
   /// build new Recording Screen
   Widget _buildNewRecording() {
+    
     return new NewRecording(
-      isHidden: !_addingRecording, 
-      addRecordingCallback: addRecording
+      addRecordingCallback: addRecording,
+      goBack: backToHome,
+      text: result, 
     );
   }
 
@@ -87,6 +108,10 @@ class _HomeScreenState extends State<HomeScreen> {
   /// Home Screen Builder 
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      result = _speechRec.resultText;
+    });
+
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -101,16 +126,21 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
+
           // Mask 
           _buildMask(context),
+
           // Buttons to add notes/ recordings
           AddButton(
             addRecordingCallback: addRecording, 
             addTextCallback: addTextNote,
           ),
+
           // Widget to add new recording 
-          _buildNewRecording(),
-          // Widget to dd text note 
+          _addingRecording? _buildNewRecording() : Container(), 
+
+          // Widget to add text note 
+          _addingText? Container() : Container(), 
         ]
       ),
     ); 

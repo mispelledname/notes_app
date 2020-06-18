@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:notesapp/util/colour.dart';
 import 'package:notesapp/util/constants.dart';
 import 'package:notesapp/widget/recorded_text.dart';
-import 'package:notesapp/widget/audio_recording.dart';
+import 'package:notesapp/widget/audio_recording_buttons.dart';
 
 /// New Recording widget
 /// 
@@ -85,7 +85,7 @@ class _NewRecordingState extends State<NewRecording> {
           Container(height: 150),
 
           // audio recording buttons 
-          AudioRecording(
+          AudioRecordingButtons(
             recordedText: widget.text,
           ), 
         ],)

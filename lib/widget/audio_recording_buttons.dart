@@ -10,17 +10,17 @@ import 'package:notesapp/model/CRUDModel.dart';
 /// Audio Recording 
 /// 
 /// Widget contains two buttons 
-class AudioRecording extends StatefulWidget {
+class AudioRecordingButtons extends StatefulWidget {
   
   final String recordedText; 
 
-  AudioRecording({@required this.recordedText});
+  AudioRecordingButtons({@required this.recordedText});
   
   @override
-  _AudioRecordingState createState() => _AudioRecordingState();
+  _AudioRecordingButtonsState createState() => _AudioRecordingButtonsState();
 }
 
-class _AudioRecordingState extends State<AudioRecording> {
+class _AudioRecordingButtonsState extends State<AudioRecordingButtons> {
 
   /// Build Split Button
   /// 

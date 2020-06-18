@@ -39,15 +39,14 @@ class _AudioRecordingState extends State<AudioRecording> {
   /// Build Save Button
   /// 
   /// When tapped, saves the current audio and closes the recording widget.
-  Widget _buildSaveButton() {
-    
+  Widget _buildSaveButton(_firebaseProvider) {
+
     return RectangleButton(
       buttonColor: AppColor.accentColor1,
       buttonText: Text("Save"),
       onTap: () async {
-        final _firebaseApi = Provider.of<CRUDModel>(context);
         Note note = Note(title: "Recording", content: widget.recordedText);
-        await _firebaseApi.addNote(note);
+        await _firebaseProvider.addNote(note);
         Navigator.pushNamed(context, Router.homeRoute);
       }
     );
@@ -56,6 +55,8 @@ class _AudioRecordingState extends State<AudioRecording> {
   /// build Audio Recording widget
   @override
   Widget build(BuildContext context) {
+    final _firebaseProvider = Provider.of<CRUDModel>(context);
+
     return Container(
       padding: EdgeInsets.only(
         left: Constants.audioSidePadding, 
@@ -69,7 +70,7 @@ class _AudioRecordingState extends State<AudioRecording> {
             // left split button 
             _buildSplitButton(),
             // right save button  
-            _buildSaveButton(),
+            _buildSaveButton(_firebaseProvider),
           ],
         ),
       ],)

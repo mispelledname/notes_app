@@ -41,14 +41,23 @@ class _AudioRecordingState extends State<AudioRecording> {
   /// When tapped, saves the current audio and closes the recording widget.
   Widget _buildSaveButton(_firebaseProvider) {
 
-    return RectangleButton(
-      buttonColor: AppColor.accentColor1,
-      buttonText: Text("Save"),
-      onTap: () async {
-        Note note = Note(title: "Recording", content: widget.recordedText);
+    _saveNote() async {
+      // do nothing if recorded no text 
+      if (widget.recordedText == Constants.emptyString) {
+        return ; 
+      }
+      // save note into firebase
+      else {
+        Note note = Note("Recording", widget.recordedText);
         await _firebaseProvider.addNote(note);
         Navigator.pushNamed(context, Router.homeRoute);
       }
+    }
+
+    return RectangleButton(
+      buttonColor: AppColor.accentColor1,
+      buttonText: Text("Save"),
+      onTap: _saveNote,
     );
   }
 

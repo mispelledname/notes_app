@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notesapp/model/CRUDModel.dart';
 import 'package:notesapp/model/note.dart';
 import 'package:notesapp/model/format_date_time.dart';
 import 'package:notesapp/util/colour.dart';
@@ -22,7 +23,7 @@ class NoteCard extends StatefulWidget {
 class _NoteCardState extends State<NoteCard> {
 
   FormatDateTime _formatDateTime = locator<FormatDateTime>();
-  
+
   /// Create Content Preview
   /// 
   /// Truncates the content at an appropriate place, if it exceeds the 
@@ -66,7 +67,7 @@ class _NoteCardState extends State<NoteCard> {
   /// build date in note card
   Widget _buildDate(BuildContext context) {
     return Align(
-      child: _formatDateTime.fullStringWidget(DateTime.now()),
+      child: _formatDateTime.fullStringWidget(widget.note.dateCreated),
       alignment: Alignment.bottomLeft
     ); 
   }
@@ -75,12 +76,11 @@ class _NoteCardState extends State<NoteCard> {
   Widget _buildSpace() {
     return SizedBox(height: 10, width: 10);
   }
-  
-  /// build Note Card 
-  @override
-  Widget build(BuildContext context) {
+
+  /// build the note card content
+  Widget _buildNoteContent() {
     return Container(
-      
+
       // Aesthetics 
       decoration: BoxDecoration(
         color: AppColor.lightBgColor,
@@ -94,20 +94,42 @@ class _NoteCardState extends State<NoteCard> {
       ),
 
       // Content Display 
-      child: Column(children: <Widget>[
-        // title 
-        _buildTitle(context),
-        _buildSpace(),
+      child: Stack(children: [
+        Column(children: <Widget>[
+          // title 
+          _buildTitle(context),
+          _buildSpace(),
 
-        // content
-        _buildContent(context),
-        _buildSpace(),
-        _buildSpace(),
+          // content
+          _buildContent(context),
+          _buildSpace(),
+          _buildSpace(),
 
-        // date 
-        _buildDate(context), 
-        _buildSpace(),
-      ],)
+          // date 
+          _buildDate(context), 
+          _buildSpace(),
+
+        ],)
+      ])
+    );
+  }
+  
+  /// build Note Card 
+  @override
+  Widget build(BuildContext context) {
+
+    final _firebaseApi = locator<CRUDModel>();
+
+    return GestureDetector(
+      // display note 
+      onTap: (){},
+
+      // show note quick options 
+      onLongPress: () {
+        _firebaseApi.removeNote(widget.note.id);
+      },
+
+      child:_buildNoteContent()
     );
   }
 }

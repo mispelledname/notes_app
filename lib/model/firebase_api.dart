@@ -35,8 +35,9 @@ class FirebaseApi{
   }
 
   /// add new document to database collection
-  Future<DocumentReference> addDocument(Map data) {
-    return ref.add(data);
+  Future<void> addDocument(Map data) {
+    return ref.document(data['id']).setData(data);
+    // return ref.add(data);
   }
 
   /// update data in specified document in database 

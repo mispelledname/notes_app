@@ -38,6 +38,32 @@ class _NotesDisplayState extends State<NotesDisplay> {
     _controller.addListener(_scrollListener);
     super.initState();
   }
+
+  /// Build list from notes 
+  Widget _buildNotesList(List<Note> notes) {
+    return Container(
+      height: MediaQuery.of(context).size.height * Constants.notesDisplayContainerHeight,
+      child: Overlay(
+        initialEntries: <OverlayEntry>[
+          OverlayEntry(
+            builder: (BuildContext context) {
+              return ListView.builder(
+                padding: EdgeInsets.all(0),
+                shrinkWrap: true,
+                controller: _controller,
+                itemCount: notes.length,
+                itemBuilder: (buildContext, index) =>
+                  Container(
+                    margin: EdgeInsets.only(bottom: Constants.noteCardItemSpacing),
+                    child: NoteCard(note: notes[index])
+                  )
+              );
+            }
+          ),
+        ],
+      )
+    );
+  }
   
   /// Build Notes Display 
   /// 
@@ -69,16 +95,24 @@ class _NotesDisplayState extends State<NotesDisplay> {
                         .toList();
               return Container(
                 height: MediaQuery.of(context).size.height * Constants.notesDisplayContainerHeight,
-                child: new ListView.builder(
-                  padding: EdgeInsets.all(0),
-                  shrinkWrap: true,
-                  controller: _controller,
-                  itemCount: notes.length,
-                  itemBuilder: (buildContext, index) =>
-                    Container(
-                      margin: EdgeInsets.only(bottom: Constants.noteCardItemSpacing),
-                      child: NoteCard(note: notes[index])
-                    )
+                child: Overlay(
+                  initialEntries: <OverlayEntry>[
+                    OverlayEntry(
+                      builder: (BuildContext context) {
+                        return ListView.builder(
+                          padding: EdgeInsets.all(0),
+                          shrinkWrap: true,
+                          controller: _controller,
+                          itemCount: notes.length,
+                          itemBuilder: (buildContext, index) =>
+                            Container(
+                              margin: EdgeInsets.only(bottom: Constants.noteCardItemSpacing),
+                              child: NoteCard(note: notes[index])
+                            )
+                        );
+                      }
+                    ),
+                  ],
                 )
               );
           }

@@ -34,7 +34,7 @@ class _RecordedTextState extends State<RecordedText> {
       ),
 
       // content display 
-      child: Text("${widget.text}", style: Theme.of(context).textTheme.bodyText1),
+      child: Text("${widget.text}", style: Theme.of(context).textTheme.bodyText2),
     );
   }
 }

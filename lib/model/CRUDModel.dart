@@ -47,15 +47,10 @@ class CRUDModel extends ChangeNotifier {
     return ;
   }
 
-
   /// Add a new note to the database
   Future addNote(Note data) async{
-    print("ADDING NOTE");
-    var result  = await _api.addDocument(data.toJson()) ;
-
+    await _api.addDocument(data.toJson()) ;
     return ;
-
   }
-
 
 }
